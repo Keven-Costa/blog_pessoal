@@ -30,7 +30,7 @@ export class UsuarioController {
     }
 
     @UseGuards( JwtAuthGuard )
-    @Put(' /atualizar' )
+    @Put( '/atualizar' )
     @HttpCode( HttpStatus.OK )
     async update( @Body() usuario: Usuario ): Promise< Usuario > {
         return this.usuarioService.update( usuario )
