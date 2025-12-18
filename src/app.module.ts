@@ -7,23 +7,27 @@ import { Tema } from './temas/entities/tema.entity';
 import { AuthModule } from './auth/auth.module';
 import { Usuario } from './usuario/entities/usuario.entity';
 import { UsuarioModule } from './usuario/usuario.module';
-import { ConfigModule } from '@nestjs/config';
-import { ProdService } from './data/services/prod.service';
+import { AppController } from './app.controller';
 
-
-@Module( {
-  imports: [  
-    ConfigModule.forRoot(),
-    TypeOrmModule.forRootAsync({
-      useClass: ProdService,
-        imports: [ConfigModule],
+// Decorator - Etiqueta de Metadados
+@Module({
+  imports: [  // Configurando o TypeORM
+    TypeOrmModule.forRoot({
+      type: 'mysql',
+      host: 'localhost',
+      port: 3306,
+      username: 'root',
+      password: 'root',
+      database: 'db_blogpessoal',
+      entities: [Postagem, Tema, Usuario],
+      synchronize: true,
     }),
     PostagemModule,
     TemaModule,
     AuthModule,
     UsuarioModule
   ],
-  controllers: [],
+  controllers: [AppController],
   providers: [],
 })
 export class AppModule { }
